@@ -3,6 +3,10 @@
     display: flex;
     height: 100vh;
 }
+/* Apply animation to the entire page/container */
+#page-container {
+    animation: slideIn 1s ease-in-out;
+}
 
 /* Left Section (Image & Text) */
 .login-left {
@@ -21,7 +25,7 @@
     height: auto;
 }
 
-.login-text {
+.text {
     font-size: 1.5rem;
     font-weight: medium;
     margin-top: 1rem;
@@ -149,22 +153,22 @@
 }
 
 .social-btn {
-    width: 100%;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 5px;
-    color: white;
+    margin-top: 0.5rem;
     cursor: pointer;
     text-align: center;
+    width: 50px;
+    height: 50px;
+    background-color: #dbdbdb;
+    border-radius: 50%;
+    display: flex; /* Center content */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+.social-btn img {
+    height: 30px;
+    width: 30px;
 }
 
-.google {
-    background-color: #db4437;
-}
-
-.facebook {
-    background-color: #1877f2;
-}
 
 /* Signup Option */
 .option {
@@ -179,6 +183,51 @@
 .option a:hover {
     text-decoration: underline;
 }
+
+
+/*Sign-up*/
+.signup-container {
+    display: flex;
+    height: 100vh;
+}
+
+.signup-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.signup-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color:#007bff;
+}
+
+.signup-image {
+    max-width: 80%;
+    height: auto;
+}
+
+.inline-fields {
+    display: flex;
+    gap: 1rem;
+}
+
+.password-info {
+    font-size: 12px;
+    color: gray;
+}
+
+
+
+
+
 
 /* Responsive */
 @media (max-width: 850px) {
@@ -196,87 +245,16 @@
         max-width: 60%;
     }
 }
-/* Container Styling */
-.signup-container {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
+/* Sliding in from the right */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100vw); /* Start off-screen*/
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0); /* Slide into place */
+    }
 }
 
-/* Left Section */
-.signup-left {
-    flex: 1;
-    text-align: center;
-}
-
-.signup-image {
-    max-width: 100%;
-    height: auto;
-}
-.text {
-    font-size: 1.5rem;
-    margin-top: 1rem;
-}
-
-/* Right Section */
-.signup-right {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-  /* Input Group */
-  .input-group {
-    position: relative;
-    margin-bottom: 1rem;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    font-size: 0.9rem;
-    color: #666;
-    transition: all 0.3s;
-  }
-  
-  /* Adjust label when input is focused */
-  .input:focus + .label,
-  .input:not(:placeholder-shown) + .label {
-    top: 5px;
-    font-size: 0.75rem;
-    color: #333;
-  }
-  
-  /* Align Full Name & Username in the Same Line */
-  .inline-fields {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .inline-fields .input-group {
-    flex: 1;
-  }
-  
-  /* Align Password & Confirm Password in the Same Line */
-  .password-fields {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .password-fields .input-group {
-    flex: 1;
-  }
-  
 
