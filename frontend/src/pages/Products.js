@@ -1,43 +1,31 @@
 import React, { useState } from "react";
-import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiPlus, FiX } from "react-icons/fi";
 
 export const Products = () => {
-  const [products, setProducts] = useState([
-    { id: 1, name: "Laptop", category: "Electronics", price: 1200 },
-    { id: 2, name: "T-Shirt", category: "Clothing", price: 25 },
-    { id: 3, name: "Sofa", category: "Furniture", price: 500 },
-    { id: 4, name: "Basketball", category: "Sports", price: 30 },
-  ]);
-
-  const [newProduct, setNewProduct] = useState({
-    name: "",
-    category: "",
-    price: "",
-  });
-
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
+  const [newProduct, setNewProduct] = useState({ name: "", category: "", price: "" });
 
   // Add new product
   const handleAddProduct = () => {
-    if (newProduct.name.trim() && newProduct.category.trim() && newProduct.price) {
-      setProducts([...products, { id: Date.now(), ...newProduct }]);
+    if (newProduct.name && newProduct.category && newProduct.price) {
+      if (editProduct) {
+        setProducts(products.map((p) => (p.id === editProduct.id ? { ...editProduct, ...newProduct } : p)));
+        setEditProduct(null);
+      } else {
+        setProducts([...products, { id: Date.now(), ...newProduct }]);
+      }
       setNewProduct({ name: "", category: "", price: "" });
+      setShowForm(false);
     }
   };
 
-  // Edit product
+  // Open edit form
   const handleEditProduct = (product) => {
-    setEditingProduct(product);
-  };
-
-  // Save edited product
-  const handleSaveProduct = () => {
-    setProducts(
-      products.map((p) =>
-        p.id === editingProduct.id ? editingProduct : p
-      )
-    );
-    setEditingProduct(null);
+    setNewProduct(product);
+    setEditProduct(product);
+    setShowForm(true);
   };
 
   // Delete product
@@ -47,41 +35,22 @@ export const Products = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-6">Products</h2>
+      <h2 className="text-2xl font-semibold mb-4">Products</h2>
 
-      {/* Add Product */}
-      <div className="mb-6 grid grid-cols-3 gap-4">
-        <input
-          type="text"
-          placeholder="Product name..."
-          value={newProduct.name}
-          onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-          className="border p-2 rounded"
-        />
-        <input
-          type="text"
-          placeholder="Category..."
-          value={newProduct.category}
-          onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-          className="border p-2 rounded"
-        />
-        <input
-          type="number"
-          placeholder="Price..."
-          value={newProduct.price}
-          onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-          className="border p-2 rounded"
-        />
-        <button
-          onClick={handleAddProduct}
-          className="bg-blue-500 text-white px-4 py-2 rounded col-span-3 flex items-center justify-center"
-        >
-          <FiPlus size={20} className="mr-2" /> Add Product
-        </button>
-      </div>
+      {/* Add Product Button */}
+      <button
+        onClick={() => {
+          setNewProduct({ name: "", category: "", price: "" });
+          setEditProduct(null);
+          setShowForm(true);
+        }}
+        className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center"
+      >
+        <FiPlus size={20} className="mr-2" /> Add Product
+      </button>
 
-      {/* Products List */}
-      <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+      {/* Product Table */}
+      <table className="w-full border-collapse border border-gray-300 mt-4">
         <thead className="bg-gray-200">
           <tr>
             <th className="p-3 text-left">Name</th>
@@ -91,74 +60,65 @@ export const Products = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.id} className="border-b">
-              {editingProduct?.id === product.id ? (
-                <>
-                  <td className="p-3">
-                    <input
-                      type="text"
-                      value={editingProduct.name}
-                      onChange={(e) =>
-                        setEditingProduct({ ...editingProduct, name: e.target.value })
-                      }
-                      className="border p-1 rounded w-full"
-                    />
-                  </td>
-                  <td className="p-3">
-                    <input
-                      type="text"
-                      value={editingProduct.category}
-                      onChange={(e) =>
-                        setEditingProduct({ ...editingProduct, category: e.target.value })
-                      }
-                      className="border p-1 rounded w-full"
-                    />
-                  </td>
-                  <td className="p-3">
-                    <input
-                      type="number"
-                      value={editingProduct.price}
-                      onChange={(e) =>
-                        setEditingProduct({ ...editingProduct, price: e.target.value })
-                      }
-                      className="border p-1 rounded w-full"
-                    />
-                  </td>
-                  <td className="p-3">
-                    <button
-                      onClick={handleSaveProduct}
-                      className="text-green-500 hover:text-green-700 mr-2"
-                    >
-                      ✅
-                    </button>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="p-3">{product.name}</td>
-                  <td className="p-3">{product.category}</td>
-                  <td className="p-3">${product.price}</td>
-                  <td className="p-3">
-                    <button
-                      onClick={() => handleEditProduct(product)}
-                      className="text-blue-500 hover:text-blue-700 mr-3"
-                    >
-                      <FiEdit size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteProduct(product.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <FiTrash2 size={18} />
-                    </button>
-                  </td>
-                </>
-              )}
+          {products.length === 0 ? (
+            <tr>
+              <td colSpan="4" className="p-3 text-center text-gray-600">No products found.</td>
             </tr>
-          ))}
+          ) : (
+            products.map((product) => (
+              <tr key={product.id} className="border-b">
+                <td className="p-3">{product.name}</td>
+                <td className="p-3">{product.category}</td>
+                <td className="p-3">${product.price}</td>
+                <td className="p-3 flex space-x-4">
+                  <button className="text-blue-500 hover:text-blue-700" onClick={() => handleEditProduct(product)}>
+                    <FiEdit size={18} />
+                  </button>
+                  <button className="text-red-500 hover:text-red-700" onClick={() => handleDeleteProduct(product.id)}>
+                    <FiTrash2 size={18} />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
+
+      {/* Add/Edit Product Form Modal */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 w-96">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">{editProduct ? "Edit Product" : "Add Product"}</h3>
+              <FiX size={22} className="cursor-pointer" onClick={() => setShowForm(false)} />
+            </div>
+            <input
+              type="text"
+              placeholder="Product name"
+              value={newProduct.name}
+              onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+              className="border p-2 rounded w-full mb-3"
+            />
+            <input
+              type="text"
+              placeholder="Category"
+              value={newProduct.category}
+              onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+              className="border p-2 rounded w-full mb-3"
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              value={newProduct.price}
+              onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+              className="border p-2 rounded w-full mb-4"
+            />
+            <button onClick={handleAddProduct} className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+              {editProduct ? "Update Product" : "Add Product"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

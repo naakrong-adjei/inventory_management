@@ -5,6 +5,8 @@ import { Dashboard } from "../pages/Dashboard";
 import { Products } from "../pages/Products";
 import { Categories } from "../pages/Categories";
 import { Inventory } from "../pages/Inventory";
+import { Stock } from "../pages/Stock";
+import { Reports } from "../pages/Reports";
 import { Settings } from "../pages/Settings";
 
 export const Home = () => {
@@ -21,6 +23,10 @@ export const Home = () => {
             return <Categories />;
         case "inventory":
             return <Inventory />;
+        case "stock-management":
+            return <Stock/>;
+        case "reports":
+            return <Reports />;
         case "settings":
             return <Settings />;
         default:

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { 
   FiMenu, FiBox, FiClipboard, FiLayers, FiBarChart, 
-  FiSettings, FiLogOut 
+  FiSettings, FiLogOut, FiArchive, FiFileText 
 } from "react-icons/fi";
 
 export const Sidebar = () => {
@@ -33,6 +33,8 @@ export const Sidebar = () => {
             <SidebarItem icon={<FiBox size={22}/>} text="Products" isExpanded={isExpanded} onClick={() => navigate("/home/products")} />
             <SidebarItem icon={<FiLayers size={22}/>} text="Categories" isExpanded={isExpanded} onClick={() => navigate("/home/categories")} />
             <SidebarItem icon={<FiClipboard size={22}/>} text="Inventory" isExpanded={isExpanded} onClick={() => navigate("/home/inventory")} />
+            <SidebarItem icon={<FiArchive size={22}/>} text="Stock Management" isExpanded={isExpanded} onClick={() => navigate("/home/stock-management")} />
+            <SidebarItem icon={<FiFileText size={22}/>} text="Reports" isExpanded={isExpanded} onClick={() => navigate("/home/reports")} />
             <SidebarItem icon={<FiSettings size={22}/>} text="Settings" isExpanded={isExpanded} onClick={() => navigate("/home/settings")} />
         </nav>
 
