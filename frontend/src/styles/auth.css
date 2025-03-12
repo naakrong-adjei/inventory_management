@@ -97,12 +97,14 @@
     border: 1px solid #007bff;
 }
 
-.input:is(:focus, :valid) ~ label {
+.input:focus ~ label,
+.input:not(:placeholder-shown) ~ label {
     transform: translateY(-120%) scaleX(0.7);
     background-color: #fff;
     padding-inline: 0.3rem;
     color: #007bff;
 }
+
 
 /* Remember Me & Forgot Password */
 .options {
@@ -219,13 +221,19 @@
     gap: 1rem;
 }
 
-.password-info {
-    font-size: 12px;
-    color: gray;
+/* Error Message Styling */
+.error-message {
+    color: #dc3545; /* Bootstrap red */
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    transition: opacity 0.3s ease-in-out;
 }
 
-
-
+/* Ensure input and error spacing */
+.input-group {
+    margin-bottom: 1rem;
+    position: relative;
+}
 
 
 
@@ -256,5 +264,6 @@
         transform: translateX(0); /* Slide into place */
     }
 }
+
 
 
