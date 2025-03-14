@@ -239,17 +239,20 @@
 
 /* Responsive */
 @media (max-width: 850px) {
-    .login-container {
+    .login-container{
         flex-direction: column;
         height: auto;
     }
-
-    .login-left, .login-right {
+    .signup-container {
+        flex-direction: column-reverse;
+        height: auto;
+    }
+    .login-left, .login-right, .signup-left, .signup-right{
         width: 100%;
         padding: 2rem;
     }
 
-    .login-image {
+    .login-image, .signup-image{
         max-width: 60%;
     }
 }
